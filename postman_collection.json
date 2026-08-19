@@ -1,0 +1,81 @@
+{
+  "info": {
+    "name": "Document AI Backend API",
+    "description": "API collection for the Django REST document upload, extraction, and LLM summarization service.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "document_id",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Upload Document",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "src": ""
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/api/documents/upload/",
+          "host": ["{{base_url}}"],
+          "path": ["api", "documents", "upload", ""]
+        },
+        "description": "Upload a PDF, DOCX, or TXT file. Extracts text, sends it to the LLM, and returns the fully processed document."
+      }
+    },
+    {
+      "name": "List Documents",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/documents/",
+          "host": ["{{base_url}}"],
+          "path": ["api", "documents", ""]
+        },
+        "description": "Returns a list of all uploaded/processed documents."
+      }
+    },
+    {
+      "name": "List Documents (filtered by status)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/documents/?status=completed",
+          "host": ["{{base_url}}"],
+          "path": ["api", "documents", ""],
+          "query": [{ "key": "status", "value": "completed" }]
+        }
+      }
+    },
+    {
+      "name": "Get Document Detail",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/documents/{{document_id}}/",
+          "host": ["{{base_url}}"],
+          "path": ["api", "documents", "{{document_id}}", ""]
+        },
+        "description": "Returns full detail for a single document, including extracted_text and LLM analysis."
+      }
+    }
+  ]
+}
